@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Food Picker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #555;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>What Should We Eat?</h1>
+    <div class="container">
+        <p>Select filters and click the button below to randomly choose a food item!</p>
+        <select id="typeFilter">
+            <option value="all">All Types</option>
+            <option value="Fast Food">Fast Food</option>
+            <option value="Healthy">Healthy</option>
+            <option value="Dessert">Dessert</option>
+        </select>
+
+        <select id="countryFilter">
+            <option value="all">All Countries</option>
+            <option value="Italian">Italian</option>
+            <option value="Japanese">Japanese</option>
+            <option value="Mexican">Mexican</option>
+            <option value="Vietnamese">Vietnamese</option>
+        </select>
+
+        <button onclick="pickRandomFood()">Choose Food</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const foodOptions = [
+            { name: "Pizza", type: "Fast Food", country: "Italian" },
+            { name: "Sushi", type: "Healthy", country: "Japanese" },
+            { name: "Tacos", type: "Fast Food", country: "Mexican" },
+            { name: "Pho", type: "Healthy", country: "Vietnamese" },
+            { name: "Burger", type: "Fast Food", country: "American" },
+            { name: "Salad", type: "Healthy", country: "General" },
+            { name: "Ramen", type: "Healthy", country: "Japanese" },
+            { name: "Curry", type: "Healthy", country: "Indian" },
+            { name: "Pasta", type: "Fast Food", country: "Italian" },
+            { name: "Ice Cream", type: "Dessert", country: "General" }
+        ];
+
+        function pickRandomFood() {
+            const typeFilter = document.getElementById("typeFilter").value;
+            const countryFilter = document.getElementById("countryFilter").value;
+
+            let filteredFoods = foodOptions;
+
+            if (typeFilter !== "all") {
+                filteredFoods = filteredFoods.filter(food => food.type === typeFilter);
+            }
+
+            if (countryFilter !== "all") {
+                filteredFoods = filteredFoods.filter(food => food.country === countryFilter);
+            }
+
+            if (filteredFoods.length === 0) {
+                document.getElementById("result").innerText = "No foods match your selection.";
+                return;
+            }
+
+            const randomIndex = Math.floor(Math.random() * filteredFoods.length);
+            const chosenFood = filteredFoods[randomIndex].name;
+            document.getElementById("result").innerText = `How about: ${chosenFood}?`;
+        }
+    </script>
+</body>
+</html>
